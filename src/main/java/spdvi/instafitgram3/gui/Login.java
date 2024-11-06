@@ -139,7 +139,9 @@ public class Login extends javax.swing.JFrame {
 
     private void txtRegistratMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegistratMouseClicked
         // TODO add your handling code here:
-        System.out.println("Hola");
+        Registrar registrar = new Registrar();
+        registrar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_txtRegistratMouseClicked
 
     /**
