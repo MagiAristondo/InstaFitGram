@@ -4,6 +4,8 @@
  */
 package spdvi.instafitgram3.gui;
 
+import spdvi.instafitgram3.logica.LogicaLogin;
+
 /**
  *
  * @author giari
@@ -127,8 +129,12 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         String user = txtNomUsuari.getText();
-        String password = txtPasswordHash.getText();
-        System.out.println(user + " " + password);
+        char[] password = txtPasswordHash.getPassword();
+        
+        if (LogicaLogin.ComprovarLogin(user, password))
+        {
+            System.out.println("Hola " + user + "!");
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtRegistratMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegistratMouseClicked
