@@ -15,8 +15,27 @@ public class User {
     private String email;
     private String passwordHash;
     private byte[] foto;
-    private boolean isIntructor;
+    private boolean isInstructor;
 
+    public User(int id, String nom, String email, String passwordHash, boolean isInstructor) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.isInstructor = isInstructor;
+    }
+
+    public User(String nom, String email, String passwordHash, boolean isInstructor) {
+        this.nom = nom;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.foto = foto;
+        this.isInstructor = isInstructor;
+    }
+
+    public User() {
+    }
+    
     public int getId() {
         return id;
     }
@@ -57,12 +76,12 @@ public class User {
         this.foto = foto;
     }
 
-    public boolean isIsIntructor() {
-        return isIntructor;
+    public boolean isIsInstructor() {
+        return isInstructor;
     }
 
-    public void setIsIntructor(boolean isIntructor) {
-        this.isIntructor = isIntructor;
+    public void setIsInstructor(boolean isInstructor) {
+        this.isInstructor = isInstructor;
     }
     
     @Override

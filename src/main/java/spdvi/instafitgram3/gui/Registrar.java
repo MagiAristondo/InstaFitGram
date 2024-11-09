@@ -4,6 +4,10 @@
  */
 package spdvi.instafitgram3.gui;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import spdvi.instafitgram3.dto.User;
+import spdvi.instafitgram3.logica.LogicaLogin;
+
 /**
  *
  * @author giari
@@ -105,7 +109,7 @@ public class Registrar extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnEnrere, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnEnrere, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -143,6 +147,14 @@ public class Registrar extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+        String username = txtNomRegister.getText();
+        String email = txtEmailRegister.getText();
+        String password = BCrypt.withDefaults().hashToString(12, txtPasswordRegister.getPassword());
+        boolean isInstructor = chkInstructorRegister.isSelected();
+        
+        User user = new User(username, email, password, isInstructor);
+        
+        LogicaLogin.InsertUser(user);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtPasswordRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordRegisterActionPerformed

@@ -27,4 +27,10 @@ public class LogicaLogin {
         
         return false;
     }
+    
+    public static void InsertUser(User user)
+    {
+        DataAccess da = new DataAccess();
+        System.out.println(da.insertUser(user));
+    }
 }

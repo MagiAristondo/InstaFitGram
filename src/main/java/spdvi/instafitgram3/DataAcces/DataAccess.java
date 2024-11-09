@@ -24,7 +24,7 @@ import spdvi.instafitgram3.dto.User;
 public class DataAccess {
     private Connection getConection() {
         Connection connection = null;
-        String connectionString = "jdbc:sqlserver://localhost;database=simulapdb;trustServerCertificate=true;user=sa;password=1234;";
+        String connectionString = "jdbc:sqlserver://localhost:1433;database=simulapdb;trustServerCertificate=true;user=sa;password=1234;";
 
         try {
             connection = DriverManager.getConnection(connectionString);
@@ -51,9 +51,9 @@ public class DataAccess {
                 usuario.setPasswordHash(resultSet.getString("PasswordHash"));
                 //user.setFoto(resultSet.getBytes("Foto"));
                 if (resultSet.getInt("IsInstructor") == 1) {
-                    usuario.setIsIntructor(true);
+                    usuario.setIsInstructor(true);
                 } else {
-                    usuario.setIsIntructor(false);
+                    usuario.setIsInstructor(false);
                 }
             }
             selectStatement.close();
@@ -63,5 +63,49 @@ public class DataAccess {
         }
 
         return usuario;
+    }
+    
+    public String insertUser(User user) {
+        String result = "";
+        String sql = "SET IDENTITY_INSERT Usuaris ON;"
+                + "INSERT INTO Usuaris (Id, Nom, Email, PasswordHash, IsInstructor) VALUES (?,?,?,?,?);";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement insertStatement = connection.prepareCall(sql);
+            insertStatement.setInt(1, getMaxUserId());
+            insertStatement.setString(2, user.getNom());
+            insertStatement.setString(3, user.getEmail());
+            insertStatement.setString(4, user.getPasswordHash());
+            insertStatement.setBoolean(5, user.isIsInstructor());
+            int resultset = insertStatement.executeUpdate();
+            result = "Insert successful";
+
+            insertStatement.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
+    
+    public int getMaxUserId() {
+        int maxId = 0;
+        String sql = "SELECT MAX(Id) FROM Usuaris";
+        try (Connection connection = getConection();
+             PreparedStatement selectStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = selectStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                maxId = resultSet.getInt(1); // Get the value from the first column
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maxId + 1;
     }
 }
