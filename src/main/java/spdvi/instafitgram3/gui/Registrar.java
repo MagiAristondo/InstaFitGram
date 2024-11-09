@@ -19,6 +19,8 @@ public class Registrar extends javax.swing.JFrame {
      */
     public Registrar() {
         initComponents();
+        setSize(406,330);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -42,18 +44,25 @@ public class Registrar extends javax.swing.JFrame {
         btnEnrere = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         txtNomRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomRegisterActionPerformed(evt);
             }
         });
+        getContentPane().add(txtNomRegister);
+        txtNomRegister.setBounds(206, 84, 150, 22);
+        getContentPane().add(txtEmailRegister);
+        txtEmailRegister.setBounds(206, 124, 150, 22);
 
         txtPasswordRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordRegisterActionPerformed(evt);
             }
         });
+        getContentPane().add(txtPasswordRegister);
+        txtPasswordRegister.setBounds(206, 164, 150, 22);
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -61,17 +70,29 @@ public class Registrar extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnRegistrar);
+        btnRegistrar.setBounds(256, 248, 100, 23);
 
         chkInstructorRegister.setText("És instructor");
+        getContentPane().add(chkInstructorRegister);
+        chkInstructorRegister.setBounds(50, 204, 100, 20);
 
         jLabel1.setText("Nom");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(50, 87, 100, 16);
 
         jLabel2.setText("Email");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(50, 127, 100, 16);
 
         jLabel3.setText("Contrasenya");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(50, 167, 100, 16);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Resgistra un usuari");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(143, 35, 120, 16);
 
         btnEnrere.setText("Enrere");
         btnEnrere.addActionListener(new java.awt.event.ActionListener() {
@@ -79,64 +100,8 @@ public class Registrar extends javax.swing.JFrame {
                 btnEnrereActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(chkInstructorRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(256, 256, 256))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNomRegister)
-                            .addComponent(txtEmailRegister)
-                            .addComponent(txtPasswordRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnEnrere, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnEnrere)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmailRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPasswordRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addComponent(chkInstructorRegister)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(btnRegistrar)
-                .addGap(42, 42, 42))
-        );
+        getContentPane().add(btnEnrere);
+        btnEnrere.setBounds(6, 6, 80, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

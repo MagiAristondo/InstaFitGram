@@ -4,6 +4,14 @@
  */
 package spdvi.instafitgram3.gui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import spdvi.instafitgram3.DataAcces.DataAccess;
+import spdvi.instafitgram3.dto.User;
 import spdvi.instafitgram3.logica.LogicaLogin;
 
 /**
@@ -17,6 +25,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setSize(414,315);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -37,25 +47,36 @@ public class Login extends javax.swing.JFrame {
         txtRegistrat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         txtPasswordHash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordHashActionPerformed(evt);
             }
         });
+        getContentPane().add(txtPasswordHash);
+        txtPasswordHash.setBounds(189, 169, 150, 22);
 
         txtNomUsuari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomUsuariActionPerformed(evt);
             }
         });
+        getContentPane().add(txtNomUsuari);
+        txtNomUsuari.setBounds(189, 114, 150, 22);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Inicia sessió");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(172, 51, 70, 16);
 
         jLabel2.setText("Nom d'usuari");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(75, 117, 85, 16);
 
         jLabel3.setText("Contrasenya");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(75, 172, 85, 16);
 
         btnLogin.setText("Inicia");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -63,6 +84,8 @@ public class Login extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
+        getContentPane().add(btnLogin);
+        btnLogin.setBounds(267, 224, 72, 23);
 
         txtRegistrat.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         txtRegistrat.setText("Registra't");
@@ -71,49 +94,8 @@ public class Login extends javax.swing.JFrame {
                 txtRegistratMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtRegistrat, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNomUsuari)
-                        .addComponent(txtPasswordHash, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnLogin, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(75, 75, 75))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPasswordHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLogin)
-                    .addComponent(txtRegistrat))
-                .addGap(53, 53, 53))
-        );
+        getContentPane().add(txtRegistrat);
+        txtRegistrat.setBounds(75, 224, 85, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -128,12 +110,45 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        String user = txtNomUsuari.getText();
+        String username = txtNomUsuari.getText();
         char[] password = txtPasswordHash.getPassword();
         
-        if (LogicaLogin.ComprovarLogin(user, password))
+        if (LogicaLogin.ComprovarLogin(username, password))
         {
-            System.out.println("Hola " + user + "!");
+            System.out.println("Hola " + username + "!");
+            
+            DataAccess da = new DataAccess();
+            User user = da.getUserByUsername(username);
+            
+            if (user.isIsInstructor())
+            {
+                PaginaPrincipal pp = new PaginaPrincipal();
+                pp.setVisible(true);
+                this.dispose();
+            } else
+            {
+                JDialog dialog = new JDialog(this, "Error a l'iniciar sessió", true);
+                dialog.setSize(300, 150);
+                dialog.setLocationRelativeTo(this);
+                dialog.setLayout(new BorderLayout());
+
+                // Crea el missatge
+                JLabel missatge = new JLabel("Aquest usuari no és instructor", javax.swing.SwingConstants.CENTER);
+
+                // Crea el botó
+                JButton tancarDialog = new JButton("D'acord");
+                tancarDialog.addActionListener(e -> dialog.dispose());
+
+                // Crea un panell per al botó i centra'l a la part inferior
+                JPanel botonsPanel = new JPanel();
+                botonsPanel.add(tancarDialog);
+
+                // Afegim el missatge a la part central i el panell del botó a la part inferior
+                dialog.add(missatge, BorderLayout.CENTER);
+                dialog.add(botonsPanel, BorderLayout.SOUTH);
+
+                dialog.setVisible(true);
+            }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
