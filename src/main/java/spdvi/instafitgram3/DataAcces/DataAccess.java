@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import spdvi.instafitgram3.dto.Attempt;
 import spdvi.instafitgram3.dto.User;
 
 /**
@@ -140,5 +141,35 @@ public class DataAccess {
         }
 
         return usuaris;
+    }
+    
+        public List<Attempt> getAttemptsByUserId(String userId) {
+        List<Attempt> intents = new ArrayList<Attempt>();
+        String sql = "SELECT i.*, e.NomExercici FROM Intents i JOIN Exercicis e ON i.IdExercici = e.Id WHERE i.IdUsuari=?";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setString(1, userId);
+            ResultSet resultSet = selectStatement.executeQuery();
+            while (resultSet.next()) {
+                Attempt intent = new Attempt();
+                intent.setId(resultSet.getInt("Id"));
+                intent.setIdUser(resultSet.getInt("IdUsuari"));
+                intent.setIdExercise(resultSet.getInt("IdExercici"));
+                intent.setTimeStampStart(resultSet.getDate("Timestamp_Inici"));
+                intent.setTimeStampEnd(resultSet.getDate("Timestamp_Fi"));
+                intent.setVideoFile(resultSet.getString("Videofile"));
+                intent.setExercise(resultSet.getString("NomExercici"));
+                
+                intents.add(intent);
+            }
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return intents;
     }
 }

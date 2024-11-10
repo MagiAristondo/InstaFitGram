@@ -5,7 +5,11 @@
 package spdvi.instafitgram3.gui;
 
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import spdvi.instafitgram3.DataAcces.DataAccess;
+import spdvi.instafitgram3.dto.Attempt;
 import spdvi.instafitgram3.dto.User;
 
 /**
@@ -22,9 +26,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setSize(725,485);
         setLocationRelativeTo(null);
         
-        
-    }
 
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +71,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
                 "Id", "Nom", "Email", "Contrasenya", "Instructor"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -84,6 +93,35 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        if (filaSeleccionada != -1)
+        { // Verifiquem que hi ha una fila seleccionada
+            String userId = jTable1.getValueAt(filaSeleccionada, 0).toString();
+            
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            
+            DataAccess da = new DataAccess();
+            List<Attempt> intents = da.getAttemptsByUserId(userId);
+            
+            for (Attempt intent : intents) {
+                listModel.addElement(intent.getExercise()); // Afegim cada element individualment
+            }
+            
+            jList1.setModel(listModel);
+            
+            if (jScrollPane2.getViewport().getView() != jList1) {
+                jScrollPane2.setViewportView(jList1); // Actualitzar el JScrollPane per mostrar el jList1 actualitzat
+            }
+        }
+        else
+        {
+            System.out.println("No hi ha cap fila seleccionada.");
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
