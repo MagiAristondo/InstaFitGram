@@ -18,6 +18,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import spdvi.instafitgram3.dto.Attempt;
+import spdvi.instafitgram3.dto.Review;
 import spdvi.instafitgram3.dto.User;
 
 /**
@@ -177,5 +178,64 @@ public class DataAccess {
         }
 
         return intents;
+    }
+        
+    public Attempt getAttemptByUserIdAndNomExercici(String userId, String nomExercici) {
+        Attempt intent = null;
+        String sql = "SELECT i.*, e.NomExercici FROM Intents i JOIN Exercicis e ON i.IdExercici = e.Id WHERE i.IdUsuari=? AND e.NomExercici=?";
+        
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setString(1, userId);
+            selectStatement.setString(2, nomExercici);
+            ResultSet resultSet = selectStatement.executeQuery();
+            while (resultSet.next()) {
+                intent = new Attempt();
+                intent.setId(resultSet.getInt("Id"));
+                intent.setIdUser(resultSet.getInt("IdUsuari"));
+                intent.setIdExercise(resultSet.getInt("IdExercici"));
+                intent.setTimeStampStart(resultSet.getDate("Timestamp_Inici"));
+                intent.setTimeStampEnd(resultSet.getDate("Timestamp_Fi"));
+                intent.setVideoFile(resultSet.getString("Videofile"));
+                intent.setExercise(resultSet.getString("NomExercici"));
+            }
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return intent;
+    }
+    
+    public List<Review> getReviewsByIdIntent(int IdIntent) {
+        List<Review> reviews = new ArrayList<Review>();
+        String sql = "SELECT * FROM Review WHERE IdIntent=?";
+        
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setInt(1, IdIntent);
+            ResultSet resultSet = selectStatement.executeQuery();
+            while (resultSet.next()) {
+                Review review = new Review();
+                review.setId(resultSet.getInt("Id"));
+                review.setIdAttempt(resultSet.getInt("IdIntent"));
+                review.setIdReviewer(resultSet.getInt("IdReviewer"));
+                review.setReview(resultSet.getInt("Valoracio"));
+                review.setComment(resultSet.getString("Comentari"));
+                
+                reviews.add(review);
+            }
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return reviews;
     }
 }

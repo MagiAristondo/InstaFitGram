@@ -4,10 +4,16 @@
  */
 package spdvi.instafitgram3.gui;
 
+import java.awt.BorderLayout;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import spdvi.instafitgram3.DataAcces.DataAccess;
 import spdvi.instafitgram3.dto.Attempt;
+import spdvi.instafitgram3.dto.Review;
 import spdvi.instafitgram3.dto.User;
 
 /**
@@ -18,6 +24,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     private boolean nomesSenseReview = false;
     private int filaSeleccionada;
+    String userIdSeleccionat;
     
     /**
      * Creates new form PaginaPrincipal
@@ -45,6 +52,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -84,16 +92,21 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jScrollPane1.setBounds(192, 91, 487, 325);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = {};
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
         });
         jScrollPane2.setViewportView(jList1);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(40, 91, 130, 280);
 
-        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.setText("Sense review");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
@@ -101,6 +114,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jToggleButton1);
         jToggleButton1.setBounds(40, 390, 130, 23);
+
+        jButton1.setText("Crear review");
+        getContentPane().add(jButton1);
+        jButton1.setBounds(40, 50, 130, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -118,12 +135,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     public void updateJList() {
         if (filaSeleccionada != -1)
         { // Verifiquem que hi ha una fila seleccionada
-            String userId = jTable1.getValueAt(filaSeleccionada, 0).toString();
+            userIdSeleccionat = jTable1.getValueAt(filaSeleccionada, 0).toString();
             
             DefaultListModel<String> listModel = new DefaultListModel<>();
             
             DataAccess da = new DataAccess();
-            List<Attempt> intents = da.getAttemptsByUserId(userId, nomesSenseReview);
+            List<Attempt> intents = da.getAttemptsByUserId(userIdSeleccionat, nomesSenseReview);
             
             for (Attempt intent : intents) {
                 listModel.addElement(intent.getExercise()); // Afegim cada element individualment
@@ -146,14 +163,41 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         if (jToggleButton1.isSelected()) {
             System.out.println("Botó seleccionat");
             nomesSenseReview = true;
+            jToggleButton1.setText("Mostrar tots");
         } else {
             System.out.println("Botó no seleccionat");
             nomesSenseReview = false;
+            jToggleButton1.setText("Sense review");
         }
         
         updateJList();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        // TODO add your handling code here:
+        
+        String intentSeleccionat = jList1.getSelectedValue();
+        
+        DataAccess da = new DataAccess();
+        Attempt attempt = da.getAttemptByUserIdAndNomExercici(userIdSeleccionat, intentSeleccionat);
+        
+        List<Review> reviews = da.getReviewsByIdIntent(attempt.getId());
+                
+        for(Review review : reviews)
+        {
+            mostrarReview(review);
+        }
+    }//GEN-LAST:event_jList1MouseClicked
+
+    private void mostrarReview(Review review)
+    {
+        ReviewDialog rd = new ReviewDialog(this, false);
+        
+        rd.setReview(review);
+
+        rd.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -190,6 +234,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
