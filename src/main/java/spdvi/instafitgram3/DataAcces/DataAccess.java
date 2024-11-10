@@ -143,9 +143,15 @@ public class DataAccess {
         return usuaris;
     }
     
-        public List<Attempt> getAttemptsByUserId(String userId) {
+        public List<Attempt> getAttemptsByUserId(String userId, boolean nomesSenseReview) {
         List<Attempt> intents = new ArrayList<Attempt>();
-        String sql = "SELECT i.*, e.NomExercici FROM Intents i JOIN Exercicis e ON i.IdExercici = e.Id WHERE i.IdUsuari=?";
+        String sql;
+        
+        if (!nomesSenseReview)
+            sql = "SELECT i.*, e.NomExercici FROM Intents i JOIN Exercicis e ON i.IdExercici = e.Id WHERE i.IdUsuari=?";
+        else
+            sql = "SELECT i.*, e.NomExercici FROM Intents i JOIN Exercicis e ON i.IdExercici = e.Id WHERE i.IdUsuari=? AND i.Id NOT IN (SELECT IdIntent FROM Review)";
+        
         Connection connection = getConection();
 
         try {

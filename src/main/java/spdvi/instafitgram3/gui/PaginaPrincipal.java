@@ -6,8 +6,6 @@ package spdvi.instafitgram3.gui;
 
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 import spdvi.instafitgram3.DataAcces.DataAccess;
 import spdvi.instafitgram3.dto.Attempt;
 import spdvi.instafitgram3.dto.User;
@@ -18,6 +16,9 @@ import spdvi.instafitgram3.dto.User;
  */
 public class PaginaPrincipal extends javax.swing.JFrame {
 
+    private boolean nomesSenseReview = false;
+    private int filaSeleccionada;
+    
     /**
      * Creates new form PaginaPrincipal
      */
@@ -43,6 +44,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -89,15 +91,31 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jList1);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(40, 91, 123, 325);
+        jScrollPane2.setBounds(40, 91, 130, 280);
+
+        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jToggleButton1);
+        jToggleButton1.setBounds(40, 390, 130, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        int filaSeleccionada = jTable1.getSelectedRow();
+        filaSeleccionada = jTable1.getSelectedRow();
 
+        if (filaSeleccionada != -1)
+        { // Verifiquem que hi ha una fila seleccionada
+            updateJList();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    public void updateJList() {
         if (filaSeleccionada != -1)
         { // Verifiquem que hi ha una fila seleccionada
             String userId = jTable1.getValueAt(filaSeleccionada, 0).toString();
@@ -105,7 +123,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             DefaultListModel<String> listModel = new DefaultListModel<>();
             
             DataAccess da = new DataAccess();
-            List<Attempt> intents = da.getAttemptsByUserId(userId);
+            List<Attempt> intents = da.getAttemptsByUserId(userId, nomesSenseReview);
             
             for (Attempt intent : intents) {
                 listModel.addElement(intent.getExercise()); // Afegim cada element individualment
@@ -121,7 +139,20 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         {
             System.out.println("No hi ha cap fila seleccionada.");
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }
+    
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        if (jToggleButton1.isSelected()) {
+            System.out.println("Botó seleccionat");
+            nomesSenseReview = true;
+        } else {
+            System.out.println("Botó no seleccionat");
+            nomesSenseReview = false;
+        }
+        
+        updateJList();
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,5 +195,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
