@@ -48,15 +48,13 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    users,&#xa;    new String [] {&#xa;        &quot;Id&quot;, &quot;Nom&quot;, &quot;Email&quot;, &quot;Contrasenya&quot;, &quot;Instructor&quot;&#xa;    }&#xa;)" type="code"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DataAccess da = new DataAccess();&#xa;List&lt;User&gt; userList = da.getUsers();&#xa;&#xa;Object[][] users = new Object[userList.size()][5];&#xa;&#xa;for(int i = 0; i &lt; userList.size(); i++)&#xa;{&#xa;    User user = userList.get(i);&#xa;    users[i][0] = user.getId();&#xa;    users[i][1] = user.getNom();&#xa;    users[i][2] = user.getEmail();&#xa;    users[i][3] = user.getPasswordHash();&#xa;    users[i][4] = user.isIsInstructor();&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

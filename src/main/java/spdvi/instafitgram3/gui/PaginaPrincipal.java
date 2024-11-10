@@ -4,6 +4,10 @@
  */
 package spdvi.instafitgram3.gui;
 
+import java.util.List;
+import spdvi.instafitgram3.DataAcces.DataAccess;
+import spdvi.instafitgram3.dto.User;
+
 /**
  *
  * @author giari
@@ -17,6 +21,8 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         initComponents();
         setSize(725,485);
         setLocationRelativeTo(null);
+        
+        
     }
 
     /**
@@ -41,15 +47,24 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(341, 30, 37, 16);
 
+        DataAccess da = new DataAccess();
+        List<User> userList = da.getUsers();
+
+        Object[][] users = new Object[userList.size()][5];
+
+        for(int i = 0; i < userList.size(); i++)
+        {
+            User user = userList.get(i);
+            users[i][0] = user.getId();
+            users[i][1] = user.getNom();
+            users[i][2] = user.getEmail();
+            users[i][3] = user.getPasswordHash();
+            users[i][4] = user.isIsInstructor();
+        }
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
+            users,
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Nom", "Email", "Contrasenya", "Instructor"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

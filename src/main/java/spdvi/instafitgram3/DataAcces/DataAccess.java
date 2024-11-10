@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,5 +109,36 @@ public class DataAccess {
         }
 
         return maxId + 1;
+    }
+    
+    public List<User> getUsers() {
+        List<User> usuaris = new ArrayList<User>();
+        String sql = "Select * FROM Usuaris";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = selectStatement.executeQuery();
+            while (resultSet.next()) {
+                User usuario = new User();
+                usuario.setId(resultSet.getInt("Id"));
+                usuario.setNom(resultSet.getString("Nom"));
+                usuario.setEmail(resultSet.getString("Email"));
+                usuario.setPasswordHash(resultSet.getString("PasswordHash"));
+                //user.setFoto(resultSet.getBytes("Foto"));
+                if (resultSet.getInt("IsInstructor") == 1) {
+                    usuario.setIsInstructor(true);
+                } else {
+                    usuario.setIsInstructor(false);
+                }
+                usuaris.add(usuario);
+            }
+            selectStatement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return usuaris;
     }
 }
