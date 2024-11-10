@@ -14,3 +14,8 @@ Cada vegada que faci un insert he d'executar sa linia just abans
 SET IDENTITY_INSERT Usuaris ON;
 INSERT INTO Usuaris (Id, Nom, Email, PasswordHash, IsInstructor) VALUES (?,?,?,?,?);
 ```
+
+## Reproductor de vídeo
+
+He instal·lat es VLC i he afegit sa dependència. Però crec que es NetBeans no troba es VLC.
+He afegit es VLC a ses variables d'entorn, segueix sense trobar es VLC.
