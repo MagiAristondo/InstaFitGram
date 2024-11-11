@@ -60,6 +60,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -130,6 +131,15 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1);
         jButton1.setBounds(40, 50, 130, 23);
+
+        jButton2.setText("Veure usuaris i intents");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(505, 50, 170, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -209,6 +219,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         fr.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        UsuarisIntents ui = new UsuarisIntents();
+        ui.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void mostrarReview(Review review)
     {
         ReviewDialog rd = new ReviewDialog(this, false);
@@ -255,6 +271,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
