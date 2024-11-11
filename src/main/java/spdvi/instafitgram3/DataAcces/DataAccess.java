@@ -238,4 +238,48 @@ public class DataAccess {
 
         return reviews;
     }
+    
+    public int getMaxReviewId() {
+        int maxId = 0;
+        String sql = "SELECT MAX(Id) FROM Review";
+        try (Connection connection = getConection();
+             PreparedStatement selectStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = selectStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                maxId = resultSet.getInt(1); // Get the value from the first column
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maxId + 1;
+    }
+    
+    public String insertReview(Review review) {
+        String result = "";
+        String sql = "SET IDENTITY_INSERT Review ON;"
+                + "INSERT INTO Review (Id, IdIntent, IdReviewer, Valoracio, Comentari) VALUES (?,?,?,?,?);";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement insertStatement = connection.prepareCall(sql);
+            insertStatement.setInt(1, getMaxReviewId());
+            insertStatement.setInt(2, review.getIdAttempt());
+            insertStatement.setInt(3, review.getIdReviewer());
+            insertStatement.setInt(4, review.getReview());
+            insertStatement.setString(5, review.getComment());
+            int resultset = insertStatement.executeUpdate();
+            result = "Insert successful";
+
+            insertStatement.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
 }

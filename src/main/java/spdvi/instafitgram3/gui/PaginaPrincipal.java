@@ -24,19 +24,26 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     private boolean nomesSenseReview = false;
     private int filaSeleccionada;
-    String userIdSeleccionat;
+    private String userIdSeleccionat;
+    private int idInstructor;
+    private int idAttempt;
     
     /**
      * Creates new form PaginaPrincipal
      */
-    public PaginaPrincipal() {
+    public PaginaPrincipal(int idInstructor) {
         initComponents();
         setSize(725,485);
         setLocationRelativeTo(null);
         
-
+        this.idInstructor = idInstructor;
     }
-        
+       
+    public PaginaPrincipal() {
+        initComponents();
+        setSize(725,485);
+        setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,6 +123,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jToggleButton1.setBounds(40, 390, 130, 23);
 
         jButton1.setText("Crear review");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
         jButton1.setBounds(40, 50, 130, 23);
 
@@ -181,6 +193,8 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         DataAccess da = new DataAccess();
         Attempt attempt = da.getAttemptByUserIdAndNomExercici(userIdSeleccionat, intentSeleccionat);
         
+        idAttempt = attempt.getId();
+        
         List<Review> reviews = da.getReviewsByIdIntent(attempt.getId());
                 
         for(Review review : reviews)
@@ -188,6 +202,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
             mostrarReview(review);
         }
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FerReview fr = new FerReview(idInstructor, idAttempt);
+        fr.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void mostrarReview(Review review)
     {

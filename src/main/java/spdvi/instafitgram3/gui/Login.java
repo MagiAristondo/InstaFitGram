@@ -122,7 +122,7 @@ public class Login extends javax.swing.JFrame {
             
             if (user.isIsInstructor())
             {
-                PaginaPrincipal pp = new PaginaPrincipal();
+                PaginaPrincipal pp = new PaginaPrincipal(user.getId());
                 pp.setVisible(true);
                 this.dispose();
             } else
