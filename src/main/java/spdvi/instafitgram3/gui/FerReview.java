@@ -123,7 +123,7 @@ public class FerReview extends javax.swing.JFrame {
         Review review = new Review(idAttempt, idInstructor, valoracio, comment);
         
         DataAccess da = new DataAccess();
-        da.insertReview(review);
+        System.out.println(da.insertReview(review));
         
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -282,4 +282,51 @@ public class DataAccess {
 
         return result;
     }
+    
+    public String updateReview(Review review) {
+        String result = "";
+        String sql = "UPDATE Review SET IdIntent = ?, IdReviewer = ?, Valoracio = ?, Comentari = ? WHERE Id = ?;";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement insertStatement = connection.prepareCall(sql);
+            insertStatement.setInt(1, review.getIdAttempt());
+            insertStatement.setInt(2, review.getIdReviewer());
+            insertStatement.setInt(3, review.getReview());
+            insertStatement.setString(4, review.getComment());
+            insertStatement.setInt(5, review.getId());
+            int resultset = insertStatement.executeUpdate();
+            result = "Update successful";
+
+            insertStatement.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
+    
+    public String deleteReview(int idReview) {
+        String result = "";
+        String sql = "DELETE FROM Review WHERE Id = ?;";
+        Connection connection = getConection();
+
+        try {
+            PreparedStatement insertStatement = connection.prepareCall(sql);
+            
+            insertStatement.setInt(1, idReview);
+            int resultset = insertStatement.executeUpdate();
+            result = "Delete successful";
+
+            insertStatement.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
 }
